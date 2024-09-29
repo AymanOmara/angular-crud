@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseResponse } from '../../core/base-response';
 import { Employee } from './employee-model';
+import { AddEmployeeModel } from '../add-employee.ts/add-employee-model';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +15,14 @@ export class EmployeesService {
   }
   deleteEmployee(employee: Employee): Observable<BaseResponse<boolean>> {
     return this.http.delete<BaseResponse<boolean>>(
+      this.baseUrl + 'delete-employee',
+      {
+        body: employee,
+      }
+    );
+  }
+  addEmployee(employee: AddEmployeeModel): Observable<BaseResponse<Employee>> {
+    return this.http.post<BaseResponse<Employee>>(
       this.baseUrl + 'delete-employee',
       {
         body: employee,
