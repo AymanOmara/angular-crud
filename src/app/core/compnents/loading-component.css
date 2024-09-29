@@ -1,0 +1,7 @@
+.loading-spinner {
+  position: fixed; /* Fixed positioning to center on the screen */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for actual centering */
+  z-index: 1000; /* Ensure spinner is above other content */
+}

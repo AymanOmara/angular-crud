@@ -1,0 +1,12 @@
+.table-container {
+  position: relative; /* Container is relative for child positioning */
+  height: 100vh; /* Full height of the viewport */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+}
+
+.employee-table {
+  margin-top: 20px; /* Optional margin to separate from top */
+  width: 80%; /* Adjust the width of the table */
+}
