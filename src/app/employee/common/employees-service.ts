@@ -13,20 +13,18 @@ export class EmployeesService {
   getEmployees(): Observable<BaseResponse<Employee[]>> {
     return this.http.get<BaseResponse<Employee[]>>(this.baseUrl + 'employees');
   }
-  deleteEmployee(employee: Employee): Observable<BaseResponse<boolean>> {
+  deleteEmployee(employeeId: number): Observable<BaseResponse<boolean>> {
     return this.http.delete<BaseResponse<boolean>>(
-      this.baseUrl + 'delete-employee',
-      {
-        body: employee,
-      }
+      `${this.baseUrl}delete-employee/${employeeId}`
     );
   }
   addEmployee(employee: AddEmployeeModel): Observable<BaseResponse<Employee>> {
+    console.log(employee.name);
+    console.log(employee.age);
+    console.log(employee.phoneNumber);
     return this.http.post<BaseResponse<Employee>>(
-      this.baseUrl + 'delete-employee',
-      {
-        body: employee,
-      }
+      this.baseUrl + 'add-employee',
+      employee
     );
   }
 }

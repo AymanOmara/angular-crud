@@ -3,8 +3,8 @@ import { EmployeesService } from '../../common/employees-service';
 import { Employee } from '../../common/employee-model';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
-import { LoadingComponent } from '../../../core/compnents/loading-component';
 import { SharedModule } from '../../../core/shared-module';
+import { MessageService } from 'primeng/api';
 
 @Component({
   imports: [RouterOutlet, MatTableModule, SharedModule],
@@ -14,7 +14,11 @@ import { SharedModule } from '../../../core/shared-module';
   styleUrl: './employees-component.css',
 })
 export class EmployeesComponent implements OnInit {
-  constructor(private service: EmployeesService, private router: Router) {}
+  constructor(
+    private service: EmployeesService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
   loading = true;
   employees: Employee[] = [];
   displayedColumns: string[] = ['id', 'name', 'phoneNumber', 'age', 'actions'];
@@ -29,45 +33,36 @@ export class EmployeesComponent implements OnInit {
   edit(employee: Employee) {
     // this.loading = true;
     this.router.navigate(['/add']);
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        console.log('Navigation ended: ', event);
-      }
+  }
+  deleteEmployee(employee: Employee) {
+    this.loading = true;
+    this.service.deleteEmployee(employee.id).subscribe({
+      next: (data) => {
+        this.loading = false;
+        if (data.success) {
+          this.employees = this.employees.filter(
+            (emp) => employee.id !== emp.id
+          );
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'employee added successfully',
+          });
+          console.log('Employee added successfully', data);
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error try agian later',
+        });
+        console.error('Error occurred while adding employee', error);
+      },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
-  delete(employee: Employee) {
-    this.loading = true;
-  }
 }
-/*
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { EmployeesComponent } from './employee/employees/employees-component/employees-component';
-import { EmployeesService } from './employee/common/employees-service';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatTableModule } from '@angular/material/table';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoadingComponent } from './core/compnents/loading-component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AddEmployeeComponent } from './employee/add-employee.ts/add-employee-component';
-import { ReactiveFormsModule } from '@angular/forms';
-
-@NgModule({
-  declarations: [EmployeesComponent, LoadingComponent, AddEmployeeComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatTableModule,
-    MatProgressSpinnerModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-  ],
-  providers: [EmployeesService, provideAnimationsAsync('animations')],
-  bootstrap: [],
-})
-export class AppModule {}
-
-*/

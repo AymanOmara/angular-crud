@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../core/shared-module';
 import { EmployeesService } from '../common/employees-service';
 import { AddEmployeeModel } from './add-employee-model';
-import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -31,7 +25,7 @@ export class AddEmployeeComponent implements OnInit {
   ) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
-      age: [0, Validators.required],
+      age: [Validators.required],
       phoneNumber: ['', Validators.required],
     });
   }
@@ -44,6 +38,7 @@ export class AddEmployeeComponent implements OnInit {
     this.loading = true;
     this.service.addEmployee(this.employeeModel).subscribe({
       next: (data) => {
+        this.loading = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -57,7 +52,7 @@ export class AddEmployeeComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Error',
+          detail: 'Error try agian later',
         });
         console.error('Error occurred while adding employee', error);
       },
@@ -70,7 +65,6 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeModel.name = formValues.name;
     this.employeeModel.phoneNumber = formValues.phoneNumber;
     this.employeeModel.age = formValues.age;
-
     console.log('Updated Employee Model:', this.employeeModel);
   }
 }
