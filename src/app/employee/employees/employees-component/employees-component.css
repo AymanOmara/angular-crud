@@ -1,12 +1,24 @@
 .table-container {
-  position: relative; /* Container is relative for child positioning */
-  height: 100vh; /* Full height of the viewport */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center children horizontally */
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .employee-table {
-  margin-top: 20px; /* Optional margin to separate from top */
-  width: 80%; /* Adjust the width of the table */
+  margin-top: 20px;
+  width: 80%;
+}
+
+.add-employee-button {
+  margin: 20px;
+
+  align-self: flex-end; /* Aligns button to the right */
+  padding: 10px 16px; /* Ensure proper padding for the button */
+  font-size: 16px; /* Ensure text size remains legible */
+  min-width: 120px; /* Ensure a minimum width for the button */
+}
+.action-btns {
+  margin: 10px;
 }

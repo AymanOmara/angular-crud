@@ -27,12 +27,16 @@ export class EmployeesComponent implements OnInit {
     this.loading = true;
     this.service.getEmployees().subscribe((data) => {
       this.loading = false;
-      this.employees = data?.data ?? [];
+    });
+    this.service.employees$.subscribe((employees) => {
+      this.employees = employees;
     });
   }
-  edit(employee: Employee) {
-    // this.loading = true;
+  navigateToAddEmployee(): void {
     this.router.navigate(['/add']);
+  }
+  edit(employee: Employee) {
+    this.router.navigate(['/add'], { state: { employee } });
   }
   deleteEmployee(employee: Employee) {
     this.loading = true;
@@ -46,9 +50,9 @@ export class EmployeesComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'employee added successfully',
+            detail: 'employee deleted successfully',
           });
-          console.log('Employee added successfully', data);
+          console.log('Employee deleted successfully', data);
         }
       },
       error: (error) => {

@@ -1,39 +1,46 @@
 <router-outlet>
-  <p-toast />
-<div class="table-container">
-  <table mat-table [dataSource]="employees" class="employee-table">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id. </th>
-      <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
-    </ng-container>
+  <p-toast></p-toast>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name. </th>
-      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
-    </ng-container>
+  <div class="table-container">
+    <!-- Add Employee Button -->
+    <button mat-raised-button color="primary" (click)="navigateToAddEmployee()" class="add-employee-button">
+      Add Employee
+    </button>
 
-    <ng-container matColumnDef="age">
-      <th mat-header-cell *matHeaderCellDef> Age. </th>
-      <td mat-cell *matCellDef="let element"> {{ element.age }} </td>
-    </ng-container>
+    <!-- Employee Table -->
+    <table mat-table [dataSource]="employees" class="employee-table">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="phoneNumber">
-      <th mat-header-cell *matHeaderCellDef> Phone Number. </th>
-      <td mat-cell *matCellDef="let element"> {{ element.phoneNumber }} </td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-button color="primary" (click)="edit(element)">Edit</button>
-        <button mat-button color="warn" (click)="deleteEmployee(element)">Delete</button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef> Age. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.age }} </td>
+      </ng-container>
 
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef> Phone Number. </th>
+        <td mat-cell *matCellDef="let element"> {{ element.phoneNumber }} </td>
+      </ng-container>
 
-  <loading [loading]="loading" class="loading-spinner"></loading>
-  
-</div>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="edit(element)" >Edit</button>
+          <button mat-raised-button color="warn" (click)="deleteEmployee(element)"class="action-btns">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <loading [loading]="loading" class="loading-spinner"></loading>
+  </div>
 </router-outlet>
